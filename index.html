@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine 💘</title>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffeaa7, #74b9ff, #a29bfe);
+      background-size: 400% 400%;
+      animation: bgMove 15s ease infinite;
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes bgMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* iOS-style liquid glass orbs in background */
+    .glass-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(40px);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 20%;
+      animation-delay: 2s;
+    }
+
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      bottom: 15%;
+      left: 25%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -30px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+    }
+
+    /* Card with iOS liquid glass effect */
+    .card {
+      width: min(92%, 440px);
+      padding: 50px 35px 50px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 32px;
+      text-align: center;
+      box-shadow:
+        0 8px 32px rgba(31, 38, 135, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+        0 40px 100px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: cardIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+        filter: blur(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    /* Soft glow effect */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 34px;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 105, 180, 0.2),
+          rgba(147, 112, 219, 0.2));
+      z-index: -1;
+      filter: blur(15px);
+      opacity: 0.6;
+    }
+
+    /* Liquid glass reflection overlay */
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 100%);
+      border-radius: 32px 32px 0 0;
+      pointer-events: none;
+    }
+
+    .emoji {
+      font-size: 72px;
+      margin-bottom: 15px;
+      animation: heartbeat 1.8s infinite;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      25% {
+        transform: scale(1.08);
+      }
+
+      50% {
+        transform: scale(1);
+      }
+
+      75% {
+        transform: scale(1.12);
+      }
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff4757, #ff6b81, #ee5a6f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 35px;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(255, 71, 87, 0.1);
+    }
+
+    .buttons {
+      position: relative;
+      height: 85px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      position: absolute;
+      padding: 16px 40px;
+      border-radius: 50px;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      font-family: "Poppins", sans-serif;
+      z-index: 1;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* iOS-style Yes button with liquid glass */
+    #yes {
+      left: 8%;
+      background: linear-gradient(135deg,
+          rgba(255, 77, 109, 0.95),
+          rgba(255, 117, 143, 0.95));
+      color: #fff;
+      box-shadow:
+        0 8px 32px rgba(255, 77, 109, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #yes:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow:
+        0 15px 40px rgba(255, 77, 109, 0.5),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    }
+
+    /* iOS-style No button with frosted glass */
+    #no {
+      right: 8%;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      color: #555;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    #no:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    #no {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease;
+      transform-origin: center;
+    }
+
+    /* Small Reset button */
+    #reset {
+      display: none;
+      margin: 20px auto 0;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #777;
+      padding: 10px 25px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    #reset.show {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Final Screen */
+    #final-screen {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92%, 440px);
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 32px;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #final-screen.show {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 1;
+    }
+
+    .final-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .final-message {
+      font-family: "Playfair Display", serif;
+      font-size: 34px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .treat-message {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 25px;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    #reset:hover {
+      background: rgba(255, 255, 255, 0.5);
+      color: #444;
+      transform: scale(1.05);
+    }
+
+    .hint {
+      margin-top: 30px;
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.5);
+      font-style: italic;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Floating depth hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-120vh) scale(1.8) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Beautiful floating roses */
+    .rose {
+      position: absolute;
+      animation: roseFloat linear forwards;
+      pointer-events: none;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.2));
+    }
+
+    @keyframes roseFloat {
+      from {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.9;
+      }
+
+      to {
+        transform: translateY(-130vh) rotate(720deg) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes roseSway {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(20px);
+      }
+    }
+
+    /* Glass shimmer effect */
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .card .shimmer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 32px;
+      pointer-events: none;
+    }
+
+    .card .shimmer::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 40px;
+      height: 200%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 25px;
+      }
+
+      .emoji {
+        font-size: 62px;
+      }
+
+      button {
+        padding: 14px 32px;
+        font-size: 15px;
+      }
+
+      #yes {
+        left: 5%;
+      }
+
+      #no {
+        right: 5%;
+      }
+
+      .card {
+        padding: 40px 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background glass orbs -->
+  <div class="glass-orb orb-1"></div>
+  <div class="glass-orb orb-2"></div>
+  <div class="glass-orb orb-3"></div>
+
+  <div class="card">
+    <div class="shimmer"></div>
+
+    <div class="emoji">💝❤️</div>
+    <h2>Sarna,<br>Will you be my Valentine?</h2>
+
+    <div class="buttons">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 🙈</button>
+    </div>
+
+    <div class="hint">bolo bolo 🤧....</div>
+  </div>
+
+  <div id="final-screen">
+    <div class="shimmer"></div>
+    <img src="Sarna_image.jpeg" alt="Sarna" class="final-image">
+    <div class="final-message">I love you ❤️</div>
+    <div class="treat-message">YAY 💕 Ebar treat dao tumi😘😋!</div>
+    <button id="reset" style="margin-top: 10px;">Reset 🔄</button>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
+  <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const card = document.querySelector(".card");
+    const hoverSound = document.getElementById("hoverSound");
+    const yesSound = document.getElementById("yesSound");
+    const resetBtn = document.getElementById("reset");
+    const finalScreen = document.getElementById("final-screen");
+
+    let noClickCount = 0; // Track how many times No button is clicked
+
+    // Function to trigger "Yes" celebration
+    function celebrateYes() {
+      yesSound.play();
+
+      confetti({
+        particleCount: 300,
+        spread: 130,
+        origin: { y: 0.6 },
+        colors: ['#ff4757', '#ff6b81', '#ee5a6f', '#ff9ff3', '#feca57']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 150,
+          angle: 60,
+          spread: 80,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 150,
+          angle: 120,
+          spread: 80,
+          origin: { x: 1 }
+        });
+      }, 200);
+
+      setTimeout(() => {
+        // Hide main card and show final screen smoothly
+        card.style.display = "none";
+        finalScreen.classList.add("show");
+        resetBtn.classList.add("show");
+      }, 800);
+    }
+
+    // Move the No button to a random position within the card boundaries
+    function moveNoButton() {
+      // Stay inside the card instead of the whole window
+      const padding = 20;
+
+      // Calculate max available width and height within the card
+      const maxX = card.clientWidth - noBtn.offsetWidth - padding;
+      const maxY = card.clientHeight - noBtn.offsetHeight - padding;
+
+      // Ensure the button is absolute within the card if it wasn't already
+      if (noBtn.style.position !== "absolute" || noBtn.parentElement !== card) {
+        card.appendChild(noBtn);
+        noBtn.style.position = "absolute";
+      }
+
+      const randomX = Math.max(padding, Math.random() * maxX);
+      const randomY = Math.max(padding, Math.random() * maxY);
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+      noBtn.style.right = "auto";
+      noBtn.style.bottom = "auto";
+
+      // Shrink the button slightly each time to make it harder (down to 40% size)
+      const scale = Math.max(0.4, 1 - (noClickCount * 0.05));
+      noBtn.style.transform = `scale(${scale})`;
+    }
+
+    function handleNoInteraction() {
+      if (noClickCount < 10) {
+        noClickCount++; // Count every movement (hover, touch, or click)
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+        moveNoButton();
+
+        // Check if we just reached the limit
+        if (noClickCount >= 10) {
+          setTimeout(() => {
+            noBtn.style.display = "none";
+            alert("you are not allowed to click no baby");
+            celebrateYes();
+          }, 400);
+        }
+      }
+    }
+
+    // No button interactions
+    noBtn.addEventListener("mouseenter", handleNoInteraction);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      handleNoInteraction();
+    });
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      handleNoInteraction();
+    });
+
+    // Yes button triggers celebration
+    yesBtn.addEventListener("click", () => {
+      celebrateYes();
+    });
+
+    // Reset button functionality
+    resetBtn.addEventListener("click", () => {
+      location.reload();
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      const hearts = ["❤️", "💗", "💖", "💝", "💕"];
+      heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 24 + 16 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 5 + "s";
+      heart.style.opacity = Math.random() * 0.4 + 0.3;
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9000);
+    }
+
+    // Beautiful rose creation with various sizes
+    function createRose() {
+      const rose = document.createElement("div");
+      rose.className = "rose";
+      const roses = ["🌹", "🥀", "🌺", "🌷"];
+      const roseEmoji = roses[Math.floor(Math.random() * roses.length)];
+      rose.innerHTML = roseEmoji;
+
+      // Random positioning
+      rose.style.left = Math.random() * 100 + "vw";
+
+      // Varied sizes - from small to large
+      const size = Math.random() * 40 + 20; // 20px to 60px
+      rose.style.fontSize = size + "px";
+
+      // Varied animation duration for natural effect
+      rose.style.animationDuration = Math.random() * 4 + 6 + "s";
+
+      // Varied opacity
+      rose.style.opacity = Math.random() * 0.5 + 0.5;
+
+      // Add subtle sway animation
+      rose.style.animation = `roseFloat ${Math.random() * 4 + 6}s linear forwards, roseSway ${Math.random() * 2 + 2}s ease-in-out infinite`;
+
+      document.body.appendChild(rose);
+      setTimeout(() => rose.remove(), 11000);
+    }
+
+    // Create hearts and roses at intervals
+    setInterval(createHeart, 400);
+    setInterval(createRose, 600); 
+  </script>
+
+</body>
+
+</html>
